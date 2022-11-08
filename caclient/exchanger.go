@@ -1,5 +1,5 @@
 /*
-Copyright 2022-present The Ztalab Authors.
+Copyright 2022-present The ZTDBP Authors.
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -16,11 +16,11 @@ package caclient
 import (
 	"github.com/cloudflare/backoff"
 	"github.com/pkg/errors"
-	"github.com/ztalab/cfssl/hook"
-	"github.com/ztalab/cfssl/transport"
-	"github.com/ztalab/cfssl/transport/roots"
-	"github.com/ztalab/zaca-sdk/keyprovider"
-	"github.com/ztalab/zaca-sdk/pkg/spiffe"
+	"github.com/ztdbp/cfssl/hook"
+	"github.com/ztdbp/cfssl/transport"
+	"github.com/ztdbp/cfssl/transport/roots"
+	"github.com/ztdbp/zaca-sdk/keyprovider"
+	"github.com/ztdbp/zaca-sdk/pkg/spiffe"
 	"go.uber.org/zap"
 	"net/url"
 	"reflect"

@@ -8,10 +8,10 @@
 ### SDK Installation
 
 ```
-$ go get github.com/ztalab/zaca-sdk
+$ go get github.com/ztdbp/zaca-sdk
 ```
 
 The classic usage of the ZACA SDK is that the client and the server use the certificate issued by the CA center for encrypted communication. The following is the usage of the sdk between the client and the server.
 
-See：[Demo](https://github.com/ztalab/zaca-sdk/tree/master/examples)
+See：[Demo](https://github.com/ztdbp/zaca-sdk/tree/master/examples)
 

@@ -1,4 +1,4 @@
-module github.com/ztalab/zaca-sdk
+module github.com/ztdbp/zaca-sdk
 
 go 1.17
 
@@ -7,7 +7,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/spiffe/go-spiffe/v2 v2.0.0-beta.4
 	github.com/valyala/fasthttp v1.15.1
-	github.com/ztalab/cfssl v0.0.3
+	github.com/ztdbp/cfssl v0.0.3
 	go.uber.org/zap v1.21.0
 	golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
@@ -75,6 +75,7 @@ require (
 	github.com/zeebo/errs v1.2.2 // indirect
 	github.com/zmap/zcrypto v0.0.0-20200911161511-43ff0ea04f21 // indirect
 	github.com/zmap/zlint/v2 v2.2.1 // indirect
+	github.com/ztalab/cfssl v0.0.6 // indirect
 	go.etcd.io/bbolt v1.3.6 // indirect
 	go.etcd.io/etcd/api/v3 v3.5.4 // indirect
 	go.etcd.io/etcd/client/pkg/v3 v3.5.4 // indirect

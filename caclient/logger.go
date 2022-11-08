@@ -1,5 +1,5 @@
 /*
-Copyright 2022-present The Ztalab Authors.
+Copyright 2022-present The ZTDBP Authors.
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -16,7 +16,7 @@ package caclient
 import (
 	"log"
 
-	"github.com/ztalab/zaca-sdk/pkg/logger"
+	"github.com/ztdbp/zaca-sdk/pkg/logger"
 	"go.uber.org/zap"
 )
 

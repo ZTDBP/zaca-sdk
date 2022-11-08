@@ -1,5 +1,5 @@
 /*
-Copyright 2022-present The Ztalab Authors.
+Copyright 2022-present The ZTDBP Authors.
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -23,7 +23,7 @@ import (
 	"github.com/pkg/errors"
 
 	jsoniter "encoding/json"
-	"github.com/ztalab/zaca-sdk/signature"
+	"github.com/ztdbp/zaca-sdk/signature"
 )
 
 var revokePath = "/api/v1/cfssl/revoke"

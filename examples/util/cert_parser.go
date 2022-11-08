@@ -1,5 +1,5 @@
 /*
-Copyright 2022-present The Ztalab Authors.
+Copyright 2022-present The ZTDBP Authors.
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -17,9 +17,9 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"fmt"
-	"github.com/ztalab/cfssl/helpers"
-	"github.com/ztalab/zaca-sdk/caclient"
-	"github.com/ztalab/zaca-sdk/pkg/logger"
+	"github.com/ztdbp/cfssl/helpers"
+	"github.com/ztdbp/zaca-sdk/caclient"
+	"github.com/ztdbp/zaca-sdk/pkg/logger"
 )
 
 func ExtractCertFromExchanger(ex *caclient.Exchanger) {
