@@ -8,7 +8,7 @@ require (
 	github.com/spiffe/go-spiffe/v2 v2.0.0-beta.4
 	github.com/valyala/fasthttp v1.15.1
 	github.com/ztdbp/cfssl v0.0.5
-	go.uber.org/zap v1.21.0
+	go.uber.org/zap v1.24.0
 	golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4
 	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4
 )
