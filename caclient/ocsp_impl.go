@@ -57,8 +57,7 @@ func SendOcspRequest(server string, req []byte, leaf, issuer *x509.Certificate) 
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		logger.With("url", server, resp.Status, "body", string(body)).
-			Warnf("Request error")
+		logger.Warnf("Request error: url:%s; status:%s; body:%s", server, resp.Status, "body", string(body))
 		return nil, fmt.Errorf("ocsp response err: %v", resp.Status)
 	}
 
@@ -77,7 +76,7 @@ func SendOcspRequest(server string, req []byte, leaf, issuer *x509.Certificate) 
 
 	parsedOcspResp, err := ocsp.ParseResponseForCert(body, leaf, issuer)
 	if err != nil {
-		logger.With("body", string(body)).Errorf("ocsp Parsing error: %v", err)
+		logger.Warnf("ocsp Parsing error:%v; body:%s", err, string(body))
 		return nil, errors.Wrap(err, "ocsp Parsing error")
 	}
 

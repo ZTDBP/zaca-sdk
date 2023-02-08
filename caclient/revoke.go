@@ -51,7 +51,7 @@ func (ex *Exchanger) RevokeItSelf() error {
 	if err := revokeCert(ex.caAddr, priv, cert); err != nil {
 		return err
 	}
-	ex.logger.With("sn", cert.SerialNumber.String()).Info("Service offline revoking its own certificate")
+	ex.logger.WithField("sn", cert.SerialNumber.String()).Info("Service offline revoking its own certificate")
 
 	return nil
 }

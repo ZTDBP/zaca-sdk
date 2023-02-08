@@ -23,7 +23,6 @@ import (
 )
 
 func ExtractCertFromExchanger(ex *caclient.Exchanger) {
-	logger := logger.Named("keypair-exporter")
 	tlsCert, err := ex.Transport.GetCertificate()
 	if err != nil {
 		logger.Errorf("TLS Certificate acquisition failed: %v", err)
