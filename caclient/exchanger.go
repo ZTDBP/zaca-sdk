@@ -16,11 +16,11 @@ package caclient
 import (
 	"github.com/cloudflare/backoff"
 	"github.com/pkg/errors"
+	"github.com/ztalab/zta-tools/pkg/keyprovider"
+	"github.com/ztalab/zta-tools/pkg/spiffe"
 	"github.com/ztdbp/cfssl/hook"
 	"github.com/ztdbp/cfssl/transport"
 	"github.com/ztdbp/cfssl/transport/roots"
-	"github.com/ztdbp/zaca-sdk/keyprovider"
-	"github.com/ztdbp/zaca-sdk/pkg/spiffe"
 	"go.uber.org/zap"
 	"net/url"
 	"reflect"

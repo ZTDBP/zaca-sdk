@@ -22,16 +22,16 @@ import (
 
 	"github.com/pkg/errors"
 	"github.com/valyala/fasthttp"
+	"github.com/ztalab/zta-tools/pkg/keygen"
+	"github.com/ztalab/zta-tools/pkg/spiffe"
 	"github.com/ztdbp/zaca-sdk/caclient"
-	"github.com/ztdbp/zaca-sdk/keygen"
 	"github.com/ztdbp/zaca-sdk/pkg/logger"
-	"github.com/ztdbp/zaca-sdk/pkg/spiffe"
 	"go.uber.org/zap/zapcore"
 )
 
 var (
-	caAddr   = flag.String("ca", "https://192.168.2.80:8681", "CA Server")
-	ocspAddr = flag.String("ocsp", "http://192.168.2.80:8682", "Ocsp Server")
+	caAddr   = flag.String("ca", "https://127.0.0.1:8081", "CA Server")
+	ocspAddr = flag.String("ocsp", "http://127.0.0.1:8082", "Ocsp Server")
 	addr     = flag.String("addr", ":6066", "")
 	authKey  = "0739a645a7d6601d9d45f6b237c4edeadad904f2fce53625dfdd541ec4fc8134"
 )

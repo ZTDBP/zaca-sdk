@@ -23,7 +23,7 @@ import (
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/ocsp"
 
-	"github.com/ztdbp/zaca-sdk/pkg/memorycacher"
+	"github.com/ztalab/zta-tools/memorycacher"
 	"go.uber.org/zap"
 )
 

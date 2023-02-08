@@ -16,7 +16,7 @@ package signature
 import (
 	"crypto/ecdsa"
 	"fmt"
-	"github.com/ztdbp/zaca-sdk/keygen"
+	"github.com/ztalab/zta-tools/pkg/keygen"
 	"testing"
 )
 

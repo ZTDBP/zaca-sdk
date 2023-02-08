@@ -17,9 +17,9 @@ import (
 	"github.com/ztdbp/zaca-sdk/pkg/logger"
 	"time"
 
+	"github.com/ztalab/zta-tools/pkg/keygen"
 	"github.com/ztdbp/cfssl/csr"
 	"github.com/ztdbp/cfssl/transport/core"
-	"github.com/ztdbp/zaca-sdk/keygen"
 	"go.uber.org/zap"
 )
 

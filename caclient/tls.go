@@ -19,9 +19,9 @@ import (
 
 	"github.com/pkg/errors"
 
+	"github.com/ztalab/zta-tools/pkg/spiffe"
 	"github.com/ztdbp/cfssl/transport/core"
 	"github.com/ztdbp/zaca-sdk/pkg/logger"
-	"github.com/ztdbp/zaca-sdk/pkg/spiffe"
 )
 
 // TLSGenerator ...
