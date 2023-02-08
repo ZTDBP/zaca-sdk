@@ -16,6 +16,8 @@ package caclient
 import (
 	"crypto/x509"
 	"encoding/hex"
+	"github.com/sirupsen/logrus"
+	"github.com/ztalab/zta-tools/logger"
 	"math"
 	"sync/atomic"
 	"time"
@@ -24,7 +26,6 @@ import (
 	"golang.org/x/crypto/ocsp"
 
 	"github.com/ztalab/zta-tools/memorycacher"
-	"go.uber.org/zap"
 )
 
 var _ OcspClient = &ocspMemCache{}
@@ -32,12 +33,12 @@ var _ OcspClient = &ocspMemCache{}
 // ocspMemCache ...
 type ocspMemCache struct {
 	cache   *memorycacher.Cache
-	logger  *zap.SugaredLogger
+	logger  *logger.Logger
 	ocspURL string // ca server + /ocsp
 }
 
 // NewOcspMemCache ...
-func NewOcspMemCache(logger *zap.SugaredLogger, ocspAddr string) (OcspClient, error) {
+func NewOcspMemCache(logger *logger.Logger, ocspAddr string) (OcspClient, error) {
 	return &ocspMemCache{
 		cache:   memorycacher.New(30*time.Minute, memorycacher.NoExpiration, math.MaxInt64),
 		logger:  logger,
@@ -53,7 +54,11 @@ func (of *ocspMemCache) Validate(leaf, issuer *x509.Certificate) (bool, error) {
 	if leaf == nil || issuer == nil {
 		return false, errors.New("leaf/issuer Missing parameter")
 	}
-	lo := of.logger.With("sn", leaf.SerialNumber.String(), "aki", hex.EncodeToString(leaf.AuthorityKeyId), "id", leaf.URIs[0])
+	lo := of.logger.WithFields(logrus.Fields{
+		"sn":  leaf.SerialNumber.String(),
+		"aki": hex.EncodeToString(leaf.AuthorityKeyId),
+		"id":  leaf.URIs[0],
+	})
 	// Cache fetch
 	if _, ok := of.cache.Get(leaf.SerialNumber.String()); ok {
 		return true, nil

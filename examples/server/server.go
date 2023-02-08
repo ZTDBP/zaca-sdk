@@ -22,11 +22,10 @@ import (
 
 	"github.com/pkg/errors"
 	"github.com/valyala/fasthttp"
+	"github.com/ztalab/zta-tools/logger"
 	"github.com/ztalab/zta-tools/pkg/keygen"
 	"github.com/ztalab/zta-tools/pkg/spiffe"
 	"github.com/ztdbp/zaca-sdk/caclient"
-	"github.com/ztdbp/zaca-sdk/pkg/logger"
-	"go.uber.org/zap/zapcore"
 )
 
 var (
@@ -38,33 +37,23 @@ var (
 
 // go run server.go -ca https://127.0.0.1:8081 -ocsp http://127.0.0.1:8082
 
-func init() {
-	logger.GlobalConfig(logger.Conf{
-		Debug: true,
-		Level: zapcore.DebugLevel,
-	})
-}
-
 func main() {
 	flag.Parse()
 	err := NewMTLSServer()
 	if err != nil {
-		logger.Fatal(err)
+		logger.Errorf("%v", err)
+		return
 	}
 	select {}
 }
 
 // NewMTLSServer mTLS Server Use example
 func NewMTLSServer() error {
-	l, _ := logger.NewZapLogger(&logger.Conf{
-		// Level: 2,
-		Level: 0,
-	})
 	c := caclient.NewCAI(
 		caclient.WithCAServer(caclient.RoleDefault, *caAddr),
 		caclient.WithOcspAddr(*ocspAddr),
 		caclient.WithAuthKey(authKey),
-		caclient.WithLogger(l),
+		caclient.WithLogger(logger.StandardLogger()),
 		caclient.WithCSRConf(keygen.CSRConf{
 			SNIHostnames: []string{"supreme"},
 			IPAddresses:  []string{"10.10.10.10"},
@@ -114,7 +103,7 @@ func httpsServer(cfg *tls.Config) {
 
 	if err := fasthttp.Serve(lnTLS, func(ctx *fasthttp.RequestCtx) {
 		str := ctx.Request.String()
-		logger.Info("Recv: ", str)
+		logger.Infof("Recv: %s", str)
 		ctx.SetStatusCode(200)
 		ctx.SetBody([]byte("Hello " + str))
 	}); err != nil {

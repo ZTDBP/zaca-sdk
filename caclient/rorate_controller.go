@@ -16,15 +16,15 @@ package caclient
 import (
 	"time"
 
+	"github.com/ztalab/zta-tools/logger"
 	"github.com/ztdbp/cfssl/transport/roots"
-	"go.uber.org/zap"
 )
 
 // RotateController ...
 type RotateController struct {
 	transport   *Transport
 	rotateAfter time.Duration
-	logger      *zap.SugaredLogger
+	logger      *logger.Logger
 }
 
 // Run ...

@@ -26,7 +26,7 @@ import (
 	"golang.org/x/sync/singleflight"
 
 	"github.com/pkg/errors"
-	"github.com/ztdbp/zaca-sdk/pkg/logger"
+	"github.com/ztalab/zta-tools/logger"
 )
 
 var ocspBlockSign int64 = 0

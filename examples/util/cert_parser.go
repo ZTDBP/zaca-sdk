@@ -17,9 +17,9 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"fmt"
+	"github.com/ztalab/zta-tools/logger"
 	"github.com/ztdbp/cfssl/helpers"
 	"github.com/ztdbp/zaca-sdk/caclient"
-	"github.com/ztdbp/zaca-sdk/pkg/logger"
 )
 
 func ExtractCertFromExchanger(ex *caclient.Exchanger) {

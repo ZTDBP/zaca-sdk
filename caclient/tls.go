@@ -19,9 +19,9 @@ import (
 
 	"github.com/pkg/errors"
 
+	"github.com/ztalab/zta-tools/logger"
 	"github.com/ztalab/zta-tools/pkg/spiffe"
 	"github.com/ztdbp/cfssl/transport/core"
-	"github.com/ztdbp/zaca-sdk/pkg/logger"
 )
 
 // TLSGenerator ...
@@ -115,7 +115,7 @@ func (ex *Exchanger) ServerHTTPSConfig() (*TLSGenerator, error) {
 			GetCertificate: func(info *tls.ClientHelloInfo) (*tls.Certificate, error) {
 				cert, err := ex.Transport.GetCertificate()
 				if err != nil {
-					logger.Named("transport").Errorf("Server certificate acquisition error: %v", err)
+					logger.Errorf("Server certificate acquisition error: %v", err)
 					return nil, err
 				}
 				return cert, nil
@@ -145,7 +145,7 @@ func (ex *Exchanger) ServerTLSConfig() (*TLSGenerator, error) {
 			GetCertificate: func(info *tls.ClientHelloInfo) (*tls.Certificate, error) {
 				cert, err := ex.Transport.GetCertificate()
 				if err != nil {
-					logger.Named("transport").Errorf("Server certificate acquisition error: %v", err)
+					logger.Errorf("Server certificate acquisition error: %v", err)
 					return nil, err
 				}
 				return cert, nil

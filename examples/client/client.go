@@ -18,10 +18,9 @@ import (
 	"flag"
 	"fmt"
 	"github.com/pkg/errors"
+	"github.com/ztalab/zta-tools/logger"
 	"github.com/ztalab/zta-tools/pkg/spiffe"
 	"github.com/ztdbp/zaca-sdk/caclient"
-	"github.com/ztdbp/zaca-sdk/pkg/logger"
-	"go.uber.org/zap/zapcore"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -36,13 +35,6 @@ var (
 
 // go run server.go -ca https://127.0.0.1:8081 -ocsp http://127.0.0.1:8082 -server https://127.0.0.1:6066
 
-func init() {
-	logger.GlobalConfig(logger.Conf{
-		Debug: true,
-		Level: zapcore.DebugLevel,
-	})
-}
-
 func main() {
 	flag.Parse()
 	client, err := NewMTLSClient()
@@ -55,7 +47,7 @@ func main() {
 
 		resp, err := client.Get(*serverAddr)
 		if err != nil {
-			logger.With("resp", resp).Error(err)
+			logger.Errorf("%v", err)
 			continue
 		}
 		body, _ := ioutil.ReadAll(resp.Body)
@@ -65,15 +57,11 @@ func main() {
 
 // mTLS Client Use example
 func NewMTLSClient() (*http.Client, error) {
-	l, _ := logger.NewZapLogger(&logger.Conf{
-		// Level: 2,
-		Level: -1,
-	})
 	c := caclient.NewCAI(
 		caclient.WithCAServer(caclient.RoleDefault, *caAddr),
 		caclient.WithAuthKey(authKey),
 		caclient.WithOcspAddr(*ocspAddr),
-		caclient.WithLogger(l),
+		caclient.WithLogger(logger.StandardLogger()),
 	)
 	ex, err := c.NewExchanger(&spiffe.IDGIdentity{
 		SiteID:    "test_site",

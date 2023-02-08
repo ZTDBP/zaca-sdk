@@ -27,15 +27,15 @@ import (
 
 	jsoniter "encoding/json"
 	"github.com/pkg/errors"
+	"github.com/ztalab/zta-tools/logger"
 	"github.com/ztdbp/cfssl/api/client"
 	"github.com/ztdbp/cfssl/auth"
 	"github.com/ztdbp/cfssl/signer"
-	"go.uber.org/zap"
 )
 
 // CertManager Certificate manager
 type CertManager struct {
-	logger      *zap.SugaredLogger
+	logger      *logger.Logger
 	apiClient   *client.AuthRemote
 	profile     string
 	caAddr      string
@@ -60,12 +60,12 @@ func (cai *CAInstance) NewCertManager() (*CertManager, error) {
 	if profile == "" {
 		return nil, errors.New("profile could not be empty")
 	}
-	ocspFetcher, err := NewOcspMemCache(cai.Logger.Sugar().Named("ocsp"), ocspAddr)
+	ocspFetcher, err := NewOcspMemCache(cai.Logger, ocspAddr)
 	if err != nil {
 		return nil, err
 	}
 	cm := &CertManager{
-		logger:      cai.Logger.Sugar().Named("cert-manager"),
+		logger:      cai.Logger,
 		apiClient:   apiClient,
 		profile:     profile,
 		caAddr:      caAddr,
@@ -108,7 +108,7 @@ func (cm *CertManager) SignPEM(csrPEM []byte, uniqueID string) ([]byte, error) {
 		return nil, err
 	}
 
-	cm.logger.With("req", signReq).Debug("Request for certificate")
+	cm.logger.WithField("req", signReq).Debug("Request for certificate")
 
 	certPEM, err := cm.apiClient.Sign(signReqBytes)
 	if err != nil {
@@ -145,7 +145,7 @@ func (cm *CertManager) RevokeIDGRegistryCert(certPEM []byte) error {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		cm.logger.With("status", resp.StatusCode).Errorf("Request error")
+		cm.logger.WithField("status", resp.StatusCode).Errorf("Request error")
 		return errors.New("Request error")
 	}
 

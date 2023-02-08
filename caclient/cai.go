@@ -14,13 +14,12 @@ limitations under the License.
 package caclient
 
 import (
-	"github.com/ztdbp/zaca-sdk/pkg/logger"
+	"github.com/ztalab/zta-tools/logger"
 	"time"
 
 	"github.com/ztalab/zta-tools/pkg/keygen"
 	"github.com/ztdbp/cfssl/csr"
 	"github.com/ztdbp/cfssl/transport/core"
-	"go.uber.org/zap"
 )
 
 // Role ...
@@ -40,7 +39,7 @@ type Conf struct {
 	CaAddr      string
 	OcspAddr    string
 	RotateAfter time.Duration
-	Logger      *zap.Logger
+	Logger      *logger.Logger
 	CSRConf     keygen.CSRConf
 }
 
@@ -53,7 +52,7 @@ func NewCAI(opts ...OptionFunc) *CAInstance {
 	for _, opt := range opts {
 		opt(conf)
 	}
-	conf.Logger.Sugar().Debugf("cai conf: %v", conf)
+	conf.Logger.Debugf("cai conf: %v", conf)
 	//cflog.Logger = conf.Logger.Named("cfssl")
 	return &CAInstance{
 		Conf: *conf,
@@ -107,7 +106,7 @@ func WithRotateAfter(du time.Duration) OptionFunc {
 	}
 }
 
-func WithLogger(l *zap.Logger) OptionFunc {
+func WithLogger(l *logger.Logger) OptionFunc {
 	return func(c *Conf) {
 		c.Logger = l
 	}
@@ -129,5 +128,5 @@ var defaultConf = Conf{
 		},
 	},
 	RotateAfter: 5 * time.Minute,
-	Logger:      logger.N().Named("cai"),
+	Logger:      logger.StandardLogger(),
 }

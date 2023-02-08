@@ -17,10 +17,9 @@ import (
 	"crypto/tls"
 	"time"
 
-	"github.com/pkg/errors"
-	"go.uber.org/zap"
-
 	"github.com/cloudflare/backoff"
+	"github.com/pkg/errors"
+	"github.com/ztalab/zta-tools/logger"
 	"github.com/ztdbp/cfssl/csr"
 	"github.com/ztdbp/cfssl/transport/ca"
 	"github.com/ztdbp/cfssl/transport/core"
@@ -64,7 +63,7 @@ type Transport struct {
 
 	manualRevoke bool
 
-	logger *zap.SugaredLogger
+	logger *logger.Logger
 }
 
 // TLSClientAuthClientConfig Client TLS configuration, changing certificate dynamically

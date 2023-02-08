@@ -16,12 +16,12 @@ package caclient
 import (
 	"github.com/cloudflare/backoff"
 	"github.com/pkg/errors"
+	"github.com/ztalab/zta-tools/logger"
 	"github.com/ztalab/zta-tools/pkg/keyprovider"
 	"github.com/ztalab/zta-tools/pkg/spiffe"
 	"github.com/ztdbp/cfssl/hook"
 	"github.com/ztdbp/cfssl/transport"
 	"github.com/ztdbp/cfssl/transport/roots"
-	"go.uber.org/zap"
 	"net/url"
 	"reflect"
 )
@@ -38,7 +38,7 @@ type Exchanger struct {
 	OcspFetcher OcspClient
 
 	caAddr string
-	logger *zap.SugaredLogger
+	logger *logger.Logger
 
 	caiConf *Conf
 }
@@ -54,7 +54,7 @@ func (cai *CAInstance) NewExchangerWithKeypair(id *spiffe.IDGIdentity, keyPEM []
 	if err != nil {
 		return nil, err
 	}
-	of, err := NewOcspMemCache(cai.Logger.Sugar().Named("ocsp"), cai.Conf.OcspAddr)
+	of, err := NewOcspMemCache(cai.Logger, cai.Conf.OcspAddr)
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +62,7 @@ func (cai *CAInstance) NewExchangerWithKeypair(id *spiffe.IDGIdentity, keyPEM []
 		Transport:   tr,
 		IDGIdentity: id,
 		OcspFetcher: of,
-		logger:      cai.Logger.Sugar().Named("ca"),
+		logger:      cai.Logger,
 		caAddr:      cai.CaAddr,
 
 		caiConf: &cai.Conf,
@@ -75,7 +75,7 @@ func (cai *CAInstance) NewExchanger(id *spiffe.IDGIdentity) (*Exchanger, error) 
 	if err != nil {
 		return nil, err
 	}
-	of, err := NewOcspMemCache(cai.Logger.Sugar().Named("ocsp"), cai.Conf.OcspAddr)
+	of, err := NewOcspMemCache(cai.Logger, cai.Conf.OcspAddr)
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +83,7 @@ func (cai *CAInstance) NewExchanger(id *spiffe.IDGIdentity) (*Exchanger, error) 
 		Transport:   tr,
 		IDGIdentity: id,
 		OcspFetcher: of,
-		logger:      cai.Logger.Sugar().Named("ca"),
+		logger:      cai.Logger,
 		caAddr:      cai.CaAddr,
 
 		caiConf: &cai.Conf,
@@ -92,7 +92,7 @@ func (cai *CAInstance) NewExchanger(id *spiffe.IDGIdentity) (*Exchanger, error) 
 
 // NewTransport ...
 func (cai *CAInstance) NewTransport(id *spiffe.IDGIdentity, keyPEM []byte, certPEM []byte) (*Transport, error) {
-	l := cai.Logger.Sugar()
+	l := cai.Logger
 
 	l.Debug("NewTransport Start")
 
@@ -104,7 +104,7 @@ func (cai *CAInstance) NewTransport(id *spiffe.IDGIdentity, keyPEM []byte, certP
 		CertRefreshDurationRate: CertRefreshDurationRate,
 		Identity:                cai.CFIdentity,
 		Backoff:                 &backoff.Backoff{},
-		logger:                  l.Named("ca"),
+		logger:                  l,
 	}
 
 	l.Debugf("[NEW]: Certificate rotation rate: %v", tr.CertRefreshDurationRate)
@@ -161,6 +161,6 @@ func (ex *Exchanger) RotateController() *RotateController {
 	return &RotateController{
 		transport:   ex.Transport,
 		rotateAfter: ex.caiConf.RotateAfter,
-		logger:      ex.logger.Named("rotator"),
+		logger:      ex.logger,
 	}
 }
