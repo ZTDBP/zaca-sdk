@@ -27,43 +27,17 @@ import (
 	"github.com/ztdbp/cfssl/transport/roots"
 )
 
-// A Transport is capable of providing transport-layer security using
-// TLS.
 type Transport struct {
 	CertRefreshDurationRate int
-
-	// Provider contains a key management provider.
-	Provider kp.KeyProvider
-
-	// CA contains a mechanism for obtaining signed certificates.
-	CA ca.CertificateAuthority
-
-	// TrustStore contains the certificates trusted by this
-	// transport.
-	TrustStore *roots.TrustStore
-
-	// ClientTrustStore contains the certificate authorities to
-	// use in verifying client authentication certificates.
-	ClientTrustStore *roots.TrustStore
-
-	// Identity contains information about the entity that will be
-	// used to construct certificates.
-	Identity *core.Identity
-
-	// Backoff is used to control the behaviour of a Transport
-	// when it is attempting to automatically update a certificate
-	// as part of AutoUpdate.
-	Backoff *backoff.Backoff
-
-	// RevokeSoftFail, if true, will cause a failure to check
-	// revocation (such that the revocation status of a
-	// certificate cannot be checked) to not be treated as an
-	// error.
-	RevokeSoftFail bool
-
-	manualRevoke bool
-
-	logger *logger.Logger
+	Provider                kp.KeyProvider
+	CA                      ca.CertificateAuthority
+	TrustStore              *roots.TrustStore
+	ClientTrustStore        *roots.TrustStore
+	Identity                *core.Identity
+	Backoff                 *backoff.Backoff
+	RevokeSoftFail          bool
+	manualRevoke            bool
+	logger                  *logger.Logger
 }
 
 // TLSClientAuthClientConfig Client TLS configuration, changing certificate dynamically
@@ -159,10 +133,9 @@ func (tr *Transport) ManualRevoke() {
 	tr.manualRevoke = true
 }
 
-// RefreshKeys will make sure the Transport has loaded keys and has a
-// valid certificate. It will handle any persistence, check that the
-// certificate is valid (i.e. that its expiry date is within the
-// Before date), and handle certificate reissuance as needed.
+// RefreshKeys will ensure that the transport has a key loaded and has a valid certificate.
+// It will handle any persistence, check that the certificate is valid (i.e. its expiration
+//date is within the previous date), and handle certificate reissuance as necessary.
 func (tr *Transport) RefreshKeys() (err error) {
 	ch := make(chan error, 1)
 	go func(tr *Transport) {
@@ -272,10 +245,9 @@ func (tr *Transport) GetCertificate() (*tls.Certificate, error) {
 	return &cert, nil
 }
 
-// AutoUpdate will automatically update the listener. If a non-nil
-// certUpdates chan is provided, it will receive timestamps for
-// reissued certificates. If errChan is non-nil, any errors that occur
-// in the updater will be passed along.
+// AutoUpdate The listener is automatically updated. If a non-zero certUpdates chan is provided,
+// it will receive the timestamp of the reissued certificate.
+// If errChan is non-zero, any errors that occur in the updater will be passed on.
 func (tr *Transport) AutoUpdate() error {
 	defer func() {
 		if r := recover(); r != nil {

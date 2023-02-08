@@ -7,7 +7,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.9.0
 	github.com/valyala/fasthttp v1.15.1
-	github.com/ztalab/zta-tools v0.0.0-20230208021955-528a9790d4bd
+	github.com/ztalab/zta-tools v0.0.2
 	github.com/ztdbp/cfssl v0.0.5
 	golang.org/x/crypto v0.5.0
 	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4
