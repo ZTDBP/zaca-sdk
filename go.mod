@@ -6,7 +6,7 @@ require (
 	github.com/cloudflare/backoff v0.0.0-20161212185259-647f3cdfc87a
 	github.com/pkg/errors v0.9.1
 	github.com/valyala/fasthttp v1.15.1
-	github.com/ztalab/zta-tools v0.0.0-20230208012245-ed54f37e8ea3
+	github.com/ztalab/zta-tools v0.0.0-20230208021955-528a9790d4bd
 	github.com/ztdbp/cfssl v0.0.5
 	go.uber.org/zap v1.24.0
 	golang.org/x/crypto v0.5.0
@@ -29,8 +29,3 @@ require (
 	golang.org/x/net v0.5.0 // indirect
 	golang.org/x/text v0.6.0 // indirect
 )
-
-//replace (
-//	github.com/prometheus/prometheus v2.5.0+incompatible => github.com/prometheus/prometheus/v2 v2.29.2
-//	github.com/zmap/rc2 v0.0.0-20131011165748-24b9757f5521 => github.com/zmap/rc2 v0.0.0-20190804163417-abaa70531248
-//)
