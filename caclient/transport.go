@@ -83,8 +83,7 @@ func (tr *Transport) TLSClientAuthServerConfig() (*tls.Config, error) {
 	}, nil
 }
 
-// TLSServerConfig is a general server configuration that should be
-// used for non-client authentication purposes, such as HTTPS.
+// TLSServerConfig is a general server configuration
 func (tr *Transport) TLSServerConfig() (*tls.Config, error) {
 	return &tls.Config{
 		GetCertificate: func(info *tls.ClientHelloInfo) (*tls.Certificate, error) {
@@ -103,8 +102,7 @@ func (tr *Transport) TLSServerConfig() (*tls.Config, error) {
 	}, nil
 }
 
-// Lifespan Returns the remaining replacement time of a certificate. If it is less than or equal to 0, the certificate must be replaced
-// remain Total remaining time of certificate, ava update time
+// Lifespan Returns the remaining replacement time of a certificate.
 func (tr *Transport) Lifespan() (remain time.Duration, ava time.Duration) {
 	cert := tr.Provider.Certificate()
 	if cert == nil {
@@ -133,9 +131,7 @@ func (tr *Transport) ManualRevoke() {
 	tr.manualRevoke = true
 }
 
-// RefreshKeys will ensure that the transport has a key loaded and has a valid certificate.
-// It will handle any persistence, check that the certificate is valid (i.e. its expiration
-//date is within the previous date), and handle certificate reissuance as necessary.
+// RefreshKeys
 func (tr *Transport) RefreshKeys() (err error) {
 	ch := make(chan error, 1)
 	go func(tr *Transport) {
@@ -245,9 +241,7 @@ func (tr *Transport) GetCertificate() (*tls.Certificate, error) {
 	return &cert, nil
 }
 
-// AutoUpdate The listener is automatically updated. If a non-zero certUpdates chan is provided,
-// it will receive the timestamp of the reissued certificate.
-// If errChan is non-zero, any errors that occur in the updater will be passed on.
+// AutoUpdate The listener is automatically updated.
 func (tr *Transport) AutoUpdate() error {
 	defer func() {
 		if r := recover(); r != nil {
